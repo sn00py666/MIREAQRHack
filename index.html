@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Сканер</title>
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode/minified/html5-qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #reader {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>QR Сканер</h1>
+    <div id="reader"></div>
+    <script>
+        const qrCodeReader = new Html5Qrcode("reader");
+
+        const startScanner = () => {
+            qrCodeReader.start(
+                { facingMode: "environment" },
+                {
+                    fps: 10,
+                    qrbox: { width: 500, height: 500 }
+                },
+                (decodedText) => {
+                    console.log("QR-код считан:", decodedText);
+                    // Отправка данных на сервер
+                    fetch("http://127.0.0.1:5000/api/scan", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ qrCode: decodedText })
+                    }).then(response => {
+                        if (response.ok) {
+                            console.log("QR-код успешно отправлен");
+                        } else {
+                            console.error("Ошибка отправки QR-кода");
+                        }
+                    }).catch(err => {
+                        console.error("Ошибка при отправке QR-кода:", err);
+                    });
+                },
+                (errorMessage) => {
+                    // Можно игнорировать ошибки декодирования
+                }
+            ).catch(err => {
+                console.error("Ошибка сканирования:", err);
+            });
+        };
+
+        // Запускаем сканер при загрузке страницы
+        window.onload = startScanner;
+    </script>
+</body>
+</html>
