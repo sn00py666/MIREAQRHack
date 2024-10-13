@@ -59,7 +59,7 @@
                     fetch("https://147.45.235.124/api/scan", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ qrCode: decodedText })
+                        body: JSON.stringify({ qr_code: decodedText }) // Изменено на qr_code
                     }).then(response => {
                         if (response.ok) {
                             console.log("QR-код успешно отправлен");
