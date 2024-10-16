@@ -56,7 +56,7 @@
                     showSuccessIndicator(); // Показать индикатор
 
                     // Отправка данных на сервер
-                    fetch("https://147.45.235.124/api/scan", {
+                    fetch("https://mireaqr.ru/api/scan", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ qr_code: decodedText }) // Изменено на qr_code
