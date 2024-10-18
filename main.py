@@ -11,7 +11,7 @@ app = FastAPI()
 # Настройка CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://sn00py666.github.io/MIREAQRHack/"],  # Добавьте ваш домен
+    allow_origins=["*"],  # Добавьте ваш домен
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
